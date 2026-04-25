@@ -56,13 +56,13 @@ Thumbs.db
 *.swp
 
 # =====================
-# MongoDB dumps (if you ever create them locally)
+# MongoDB dumps
 # =====================
 dump/
 *.bson
 *.json.gz
 
 # =====================
-# Optional: uploads (if your project stores files locally)
+# uploads
 # =====================
 uploads/
