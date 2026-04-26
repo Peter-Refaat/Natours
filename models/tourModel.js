@@ -93,6 +93,14 @@ tourSchema.post(/^find/, function (docs) {
   console.log(docs);
 });
 
+// AGGREGATION MIDDLEWARE
+tourSchema.pre("aggregate", function () {
+  this.pipeline().unshift({
+    $match: { secretTour: { $ne: true } },
+  });
+  console.log(this);
+});
+
 tourSchema.virtual("durationWeeks").get(function () {
   return Math.floor(this.duration / 7);
 });
