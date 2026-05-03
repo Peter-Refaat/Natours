@@ -113,7 +113,7 @@ tourSchema.pre(/^find/, function () {
 // post on find also
 tourSchema.post(/^find/, function (docs) {
   console.log(Date.now() - this.start);
-  console.log(docs);
+  // console.log(docs);
 });
 
 // AGGREGATION MIDDLEWARE
