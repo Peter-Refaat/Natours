@@ -1,10 +1,10 @@
-const express = require("express");
-const morgan = require("morgan");
+import express, { json, static } from "express";
+import morgan from "morgan";
 
-const AppError = require("./utils/appError");
-const globalErrorHandler = require("./controllers/errorController");
-const tourRouter = require("./routes/tourRoutes");
-const userRouter = require("./routes/userRoutes");
+import AppError from "./utils/appError";
+import globalErrorHandler from "./controllers/errorController";
+import tourRouter from "./routes/tourRoutes";
+import userRouter from "./routes/userRoutes";
 
 const app = express();
 
@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 //MIDDLEWARES
-app.use(express.json());
-app.use(express.static(`${__dirname}/public`));
+app.use(json());
+app.use(static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
@@ -32,4 +32,4 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
-module.exports = app;
+export default app;

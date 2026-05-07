@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const slugify = require("slugify");
+import { Schema, model } from "mongoose";
+import slugify from "slugify";
 
-const tourSchema = new mongoose.Schema(
+const tourSchema = new Schema(
   {
     name: {
       type: String,
@@ -128,4 +128,4 @@ tourSchema.virtual("durationWeeks").get(function () {
   return Math.floor(this.duration / 7);
 });
 
-module.exports = mongoose.model("Tour", tourSchema);
+export default model("Tour", tourSchema);

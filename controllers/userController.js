@@ -1,6 +1,6 @@
-const User = require("../models/userModel");
-const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/appError");
+import { find, findByIdAndUpdate } from "../models/userModel";
+import catchAsync from "../utils/catchAsync";
+import AppError from "../utils/appError";
 
 const filterObj = (obj, ...allowedFields) => {
   const ret = {};
@@ -12,8 +12,8 @@ const filterObj = (obj, ...allowedFields) => {
   return ret;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+export const getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await find();
 
   res.status(200).json({
     status: "success",
@@ -24,7 +24,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateMe = catchAsync(async (req, res, next) => {
+export const updateMe = catchAsync(async (req, res, next) => {
   // 1) Create an error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -38,7 +38,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(req.body, "name", "email");
 
   // 3) Update user document
-  const updatedUser = await User.findByIdAndUpdate(req.user._id, filteredBody, {
+  const updatedUser = await findByIdAndUpdate(req.user._id, filteredBody, {
     returnDocument: "after",
     runValidators: true,
   });
@@ -50,30 +50,30 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createUser = (req, res) => {
+export function createUser(req, res) {
   res.status(500).json({
     status: "error",
     message: "This route is not yet defined",
   });
-};
+}
 
-exports.getUser = (req, res) => {
+export function getUser(req, res) {
   res.status(500).json({
     status: "error",
     message: "This route is not yet defined",
   });
-};
+}
 
-exports.updateUser = (req, res) => {
+export function updateUser(req, res) {
   res.status(500).json({
     status: "error",
     message: "This route is not yet defined",
   });
-};
+}
 
-exports.deleteUser = (req, res) => {
+export function deleteUser(req, res) {
   res.status(500).json({
     status: "error",
     message: "This route is not yet defined",
   });
-};
+}

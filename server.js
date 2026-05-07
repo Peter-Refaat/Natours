@@ -1,8 +1,8 @@
-const dns = require("dns");
+import { setServers } from "dns";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]); // Force Node to use Google DNS
+setServers(["8.8.8.8", "8.8.4.4"]); // Force Node to use Google DNS
 
-const mongoose = require("mongoose");
+import { connect } from "mongoose";
 
 // Handling uncaught exceptions
 // exit is MANDATORY
@@ -13,23 +13,23 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const dotenv = require("dotenv");
+import { config } from "dotenv";
 
-dotenv.config({ path: "./config.env" });
+config({ path: "./config.env" });
 
-const app = require("./app");
+import { listen } from "./app";
 
 const DB = process.env.DATABASE.replace(
   "<db_password>",
   process.env.DATABASE_PASSWORD,
 );
 
-mongoose.connect(DB).then(() => {
+connect(DB).then(() => {
   console.log("DB Connection Successful! 🥸");
 });
 
 const port = process.env.PORT || 3000;
-const server = app.listen(port, () => {
+const server = listen(port, () => {
   console.log(`App Running on Port ${port}...`);
 });
 
