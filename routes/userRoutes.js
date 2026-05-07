@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { updateMe, getAllUsers, createUser, getUser, updateUser, deleteUser } from "../controllers/userController";
-import { signup, login, forgotPassword, resetPassword, protect, updatePassword } from "../controllers/authController";
+import { updateMe, getAllUsers, createUser, getUser, updateUser, deleteUser } from "../controllers/userController.js";
+import { signup, login, forgotPassword, resetPassword, protect, updatePassword } from "../controllers/authController.js";
 
 const router = Router();
 

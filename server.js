@@ -17,7 +17,7 @@ import { config } from "dotenv";
 
 config({ path: "./config.env" });
 
-import { listen } from "./app";
+import app from "./app.js";
 
 const DB = process.env.DATABASE.replace(
   "<db_password>",
@@ -29,7 +29,7 @@ connect(DB).then(() => {
 });
 
 const port = process.env.PORT || 3000;
-const server = listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App Running on Port ${port}...`);
 });
 
@@ -43,3 +43,4 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   });
 });
+

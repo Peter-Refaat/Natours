@@ -1,10 +1,15 @@
-import express, { json, static } from "express";
+import express, { json, static as expressStatic } from "express";
 import morgan from "morgan";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-import AppError from "./utils/appError";
-import globalErrorHandler from "./controllers/errorController";
-import tourRouter from "./routes/tourRoutes";
-import userRouter from "./routes/userRoutes";
+import AppError from "./utils/appError.js";
+import globalErrorHandler from "./controllers/errorController.js";
+import tourRouter from "./routes/tourRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
@@ -14,7 +19,7 @@ if (process.env.NODE_ENV === "development") {
 
 //MIDDLEWARES
 app.use(json());
-app.use(static(`${__dirname}/public`));
+app.use(expressStatic(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

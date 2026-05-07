@@ -1,6 +1,6 @@
 import { randomBytes, createHash } from "crypto";
 import { Schema, model } from "mongoose";
-import { isEmail } from "validator";
+import validator from "validator";
 import { hash, compare } from "bcryptjs";
 
 const userSchema = new Schema({
@@ -13,7 +13,7 @@ const userSchema = new Schema({
     required: [true, "Please enter your email!"],
     unique: true,
     lowercase: true,
-    validate: [isEmail, "Email is not valid"],
+    validate: [validator.isEmail, "Email is not valid"],
   },
   photo: String,
   role: {
