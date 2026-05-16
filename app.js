@@ -1,7 +1,8 @@
 import express, { json, static as expressStatic } from "express";
 import morgan from "morgan";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { rateLimit } from "express-rate-limit";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
 import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/errorController.js";
@@ -17,9 +18,17 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-//MIDDLEWARES
+//GLOBAL MIDDLEWARES
 app.use(json());
 app.use(expressStatic(`${__dirname}/public`));
+
+const limiter = rateLimit({
+  limit: 100,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP, please try again in an hour!",
+});
+
+app.use("/api", limiter);
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
