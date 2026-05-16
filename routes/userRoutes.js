@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { updateMe, getAllUsers, createUser, getUser, updateUser, deleteUser } from "../controllers/userController.js";
+import { updateMe, getAllUsers, createUser, getUser, updateUser, deleteUser, deleteMe } from "../controllers/userController.js";
 import { signup, login, forgotPassword, resetPassword, protect, updatePassword } from "../controllers/authController.js";
 
 const router = Router();
@@ -15,6 +15,7 @@ router.patch(
 );
 
 router.patch("/updateMe", protect, updateMe);
+router.delete("/deleteMe", protect, deleteMe);
 
 router
   .route("/")

@@ -41,6 +41,11 @@ const userSchema = new Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 // Hash the password before saving it to the database
@@ -59,6 +64,12 @@ userSchema.pre("save", function () {
   if (!this.isModified("password") || this.isNew) return;
 
   this.passwordChangedAt = Date.now() - 1000;
+});
+
+// show only users that are active (not deleted)
+// this points to the current query
+userSchema.pre(/^find/, function () {
+  this.find({ active: { $ne: false } });
 });
 
 // this points to the current document
