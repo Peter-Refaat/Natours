@@ -1,7 +1,8 @@
 import express, { json, static as expressStatic } from "express";
 import morgan from "morgan";
 import helmet from "helmet";
-import mongoSanitize from "express-mongo-sanitize"
+import mongoSanitize from "express-mongo-sanitize";
+import hpp from "hpp";
 import { rateLimit } from "express-rate-limit";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -34,6 +35,20 @@ app.use(mongoSanitize());
 
 // Data Sanitization against XSS (cleans req.body, req.query & req.params)
 app.use(xssSanitizer);
+
+// Prevent Parameter Pollution
+app.use(
+  hpp({
+    whitelist: [
+      "duration",
+      "ratingsQuantity",
+      "ratingsAverage",
+      "maxGroupSize",
+      "difficulty",
+      "price",
+    ],
+  }),
+);
 
 // Serving static files
 app.use(expressStatic(`${__dirname}/public`));
