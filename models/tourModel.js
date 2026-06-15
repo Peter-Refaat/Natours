@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import GeoJSON from "mongoose-geojson-schema";
 import slugify from "slugify";
+// import User from "./userModel.js";
 
 const locationSchema = new Schema({
   geometry: GeoJSON.Point,
@@ -96,6 +97,12 @@ const tourSchema = new Schema(
       description: String,
     },
     locations: [locationSchema],
+    guides: [
+      {
+        type: Schema.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -108,6 +115,11 @@ const tourSchema = new Schema(
 tourSchema.pre("save", function () {
   this.slug = slugify(this.name, { lower: true });
 });
+
+// tourSchema.pre("save", async function () {
+//   const guidesPromises = this.guides.map(async id => await User.findById(id));
+//   this.guides = await Promise.all(guidesPromises);
+// })
 
 // tourSchema.pre("save", () => {
 //   console.log("Will Save Document...");
