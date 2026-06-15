@@ -1,19 +1,23 @@
-const fs = require("fs");
-const dns = require("dns");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const Tour = require("../../models/tourModel");
+import { readFileSync } from "fs";
+import { setServers } from "dns";
+import { connect } from "mongoose";
+import { config } from "dotenv";
+import Tour from "../../models/tourModel.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]); // Force Node to use Google DNS
-dotenv.config({ path: "./config.env" });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+setServers(["8.8.8.8", "8.8.4.4"]); // Force Node to use Google DNS
+config({ path: "./config.env" });
 
 const DB = process.env.DATABASE.replace(
   "<db_password>",
   process.env.DATABASE_PASSWORD,
 );
 
-mongoose
-  .connect(DB)
+connect(DB)
   .then(() => {
     console.log("DB Connection Successful! 🥸");
   })
@@ -22,7 +26,7 @@ mongoose
   });
 
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, "utf-8"),
+  readFileSync(`${__dirname}/tours.json`, "utf-8"),
 );
 
 const importData = async () => {

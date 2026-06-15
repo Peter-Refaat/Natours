@@ -2,9 +2,11 @@
   {
     "startLocation": {
       "description": "Miami, USA",
-      "type": "Point",
-      "coordinates": [-80.185942, 25.774772],
-      "address": "301 Biscayne Blvd, Miami, FL 33132, USA"
+      "address": "301 Biscayne Blvd, Miami, FL 33132, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-80.185942, 25.774772]
+      }
     },
     "ratingsAverage": 4.8,
     "ratingsQuantity": 6,
@@ -28,39 +30,49 @@
       {
         "_id": "5c88fa8cf4afda39709c2959",
         "description": "Lummus Park Beach",
-        "type": "Point",
-        "coordinates": [-80.128473, 25.781842],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-80.128473, 25.781842]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2958",
         "description": "Islamorada",
-        "type": "Point",
-        "coordinates": [-80.647885, 24.909047],
-        "day": 2
+        "day": 2,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-80.647885, 24.909047]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2957",
         "description": "Sombrero Beach",
-        "type": "Point",
-        "coordinates": [-81.0784, 24.707496],
-        "day": 3
+        "day": 3,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-81.0784, 24.707496]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2956",
         "description": "West Key",
-        "type": "Point",
-        "coordinates": [-81.768719, 24.552242],
-        "day": 5
+        "day": 5,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-81.768719, 24.552242]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "Banff, CAN",
-      "type": "Point",
-      "coordinates": [-115.570154, 51.178456],
-      "address": "224 Banff Ave, Banff, AB, Canada"
+      "address": "224 Banff Ave, Banff, AB, Canada",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-115.570154, 51.178456]
+      }
     },
     "ratingsAverage": 5,
     "ratingsQuantity": 9,
@@ -88,32 +100,40 @@
       {
         "_id": "5c88fa8cf4afda39709c2954",
         "description": "Banff National Park",
-        "type": "Point",
-        "coordinates": [-116.214531, 51.417611],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-116.214531, 51.417611]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2953",
         "description": "Jasper National Park",
-        "type": "Point",
-        "coordinates": [-118.076152, 52.875223],
-        "day": 3
+        "day": 3,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-118.076152, 52.875223]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2952",
         "description": "Glacier National Park of Canada",
-        "type": "Point",
-        "coordinates": [-117.490309, 51.261937],
-        "day": 5
+        "day": 5,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-117.490309, 51.261937]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "Aspen, USA",
-      "type": "Point",
-      "coordinates": [-106.822318, 39.190872],
-      "address": "419 S Mill St, Aspen, CO 81611, USA"
+      "address": "419 S Mill St, Aspen, CO 81611, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-106.822318, 39.190872]
+      }
     },
     "ratingsAverage": 4.5,
     "ratingsQuantity": 6,
@@ -141,25 +161,31 @@
       {
         "_id": "5c88fa8cf4afda39709c295c",
         "description": "Aspen Highlands",
-        "type": "Point",
-        "coordinates": [-106.855385, 39.182677],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-106.855385, 39.182677]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c295b",
         "description": "Beaver Creek",
-        "type": "Point",
-        "coordinates": [-106.516623, 39.60499],
-        "day": 2
+        "day": 2,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-106.516623, 39.60499]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "Las Vegas, USA",
-      "type": "Point",
-      "coordinates": [-115.172652, 36.110904],
-      "address": "3663 S Las Vegas Blvd, Las Vegas, NV 89109, USA"
+      "address": "3663 S Las Vegas Blvd, Las Vegas, NV 89109, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-115.172652, 36.110904]
+      }
     },
     "ratingsAverage": 4.7,
     "ratingsQuantity": 7,
@@ -187,39 +213,49 @@
       {
         "_id": "5c88fa8cf4afda39709c2965",
         "description": "Zion Canyon National Park",
-        "type": "Point",
-        "coordinates": [-112.987418, 37.198125],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-112.987418, 37.198125]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2964",
         "description": "Antelope Canyon",
-        "type": "Point",
-        "coordinates": [-111.376161, 36.86438],
-        "day": 4
+        "day": 4,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-111.376161, 36.86438]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2963",
         "description": "Grand Canyon National Park",
-        "type": "Point",
-        "coordinates": [-112.115763, 36.058973],
-        "day": 5
+        "day": 5,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-112.115763, 36.058973]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2962",
         "description": "Joshua Tree National Park",
-        "type": "Point",
-        "coordinates": [-116.107963, 34.011646],
-        "day": 9
+        "day": 9,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-116.107963, 34.011646]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "NYC, USA",
-      "type": "Point",
-      "coordinates": [-73.985141, 40.75894],
-      "address": "Manhattan, NY 10036, USA"
+      "address": "Manhattan, NY 10036, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.985141, 40.75894]
+      }
     },
     "ratingsAverage": 4.6,
     "ratingsQuantity": 5,
@@ -243,32 +279,40 @@
       {
         "_id": "5c88fa8cf4afda39709c2960",
         "description": "New York",
-        "type": "Point",
-        "coordinates": [-73.967696, 40.781821],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-73.967696, 40.781821]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c295f",
         "description": "Los Angeles",
-        "type": "Point",
-        "coordinates": [-118.324396, 34.097984],
-        "day": 3
+        "day": 3,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-118.324396, 34.097984]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c295e",
         "description": "San Francisco",
-        "type": "Point",
-        "coordinates": [-122.408865, 37.787825],
-        "day": 5
+        "day": 5,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-122.408865, 37.787825]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "California, USA",
-      "type": "Point",
-      "coordinates": [-118.803461, 34.006072],
-      "address": "29130 Cliffside Dr, Malibu, CA 90265, USA"
+      "address": "29130 Cliffside Dr, Malibu, CA 90265, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-118.803461, 34.006072]
+      }
     },
     "ratingsAverage": 3.9,
     "ratingsQuantity": 7,
@@ -296,46 +340,58 @@
       {
         "_id": "5c88fa8cf4afda39709c296b",
         "description": "Point Dume Beach",
-        "type": "Point",
-        "coordinates": [-118.809361, 34.003098],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-118.809361, 34.003098]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c296a",
         "description": "Venice Skate Park",
-        "type": "Point",
-        "coordinates": [-118.47549, 33.987367],
-        "day": 4
+        "day": 4,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-118.47549, 33.987367]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2969",
         "description": "San Diego Skydive",
-        "type": "Point",
-        "coordinates": [-116.830104, 33.022843],
-        "day": 6
+        "day": 6,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-116.830104, 33.022843]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2968",
         "description": "Kern River Rafting",
-        "type": "Point",
-        "coordinates": [-118.4547, 35.710359],
-        "day": 7
+        "day": 7,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-118.4547, 35.710359]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2967",
         "description": "Yosemite National Park",
-        "type": "Point",
-        "coordinates": [-119.600492, 37.742371],
-        "day": 10
+        "day": 10,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-119.600492, 37.742371]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "Utah, USA",
-      "type": "Point",
-      "coordinates": [-109.55099, 37.283469],
-      "address": "Bluff, UT 84512, USA"
+      "address": "Bluff, UT 84512, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-109.55099, 37.283469]
+      }
     },
     "ratingsAverage": 4.8,
     "ratingsQuantity": 6,
@@ -359,32 +415,40 @@
       {
         "_id": "5c88fa8cf4afda39709c2973",
         "description": "Natural Bridges National Monument",
-        "type": "Point",
-        "coordinates": [-109.99953, 37.629017],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-109.99953, 37.629017]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2972",
         "description": "Horseshoe Bend",
-        "type": "Point",
-        "coordinates": [-111.50954, 36.883269],
-        "day": 3
+        "day": 3,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-111.50954, 36.883269]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c2971",
         "description": "Death Valley National Park",
-        "type": "Point",
-        "coordinates": [-117.07399, 36.501435],
-        "day": 6
+        "day": 6,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-117.07399, 36.501435]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "Yellowknife, CAN",
-      "type": "Point",
-      "coordinates": [-114.406097, 62.439943],
-      "address": "Yellowknife, NT X1A 2L2, Canada"
+      "address": "Yellowknife, NT X1A 2L2, Canada",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-114.406097, 62.439943]
+      }
     },
     "ratingsAverage": 4.7,
     "ratingsQuantity": 7,
@@ -412,18 +476,22 @@
       {
         "_id": "5c88fa8cf4afda39709c2975",
         "description": "Yellowknife",
-        "type": "Point",
-        "coordinates": [-114.406097, 62.439943],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-114.406097, 62.439943]
+        }
       }
     ]
   },
   {
     "startLocation": {
       "description": "California, USA",
-      "type": "Point",
-      "coordinates": [-122.29286, 38.294065],
-      "address": "560 Jefferson St, Napa, CA 94559, USA"
+      "address": "560 Jefferson St, Napa, CA 94559, USA",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.29286, 38.294065]
+      }
     },
     "ratingsAverage": 4.4,
     "ratingsQuantity": 7,
@@ -447,23 +515,29 @@
       {
         "_id": "5c88fa8cf4afda39709c296f",
         "description": "Beringer Vineyards",
-        "type": "Point",
-        "coordinates": [-122.479887, 38.510312],
-        "day": 1
+        "day": 1,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-122.479887, 38.510312]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c296e",
         "description": "Clos Pegase Winery & Tasting Room",
-        "type": "Point",
-        "coordinates": [-122.582948, 38.585707],
-        "day": 3
+        "day": 3,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-122.582948, 38.585707]
+        }
       },
       {
         "_id": "5c88fa8cf4afda39709c296d",
         "description": "Raymond Vineyard and Cellar",
-        "type": "Point",
-        "coordinates": [-122.434697, 38.482181],
-        "day": 5
+        "day": 5,
+        "geometry": {
+          "type": "Point",
+          "coordinates": [-122.434697, 38.482181]
+        }
       }
     ]
   }

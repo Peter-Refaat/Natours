@@ -1,5 +1,13 @@
 import { Schema, model } from "mongoose";
+import GeoJSON from "mongoose-geojson-schema";
 import slugify from "slugify";
+
+const locationSchema = new Schema({
+  geometry: GeoJSON.Point,
+  address: String,
+  description: String,
+  day: Number,
+});
 
 const tourSchema = new Schema(
   {
@@ -74,7 +82,7 @@ const tourSchema = new Schema(
     images: [String],
     createdAt: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
       select: false,
     },
     startDates: [Date],
@@ -82,6 +90,12 @@ const tourSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    startLocation: {
+      geometry: GeoJSON.Point,
+      address: String,
+      description: String,
+    },
+    locations: [locationSchema],
   },
   {
     toJSON: { virtuals: true },
