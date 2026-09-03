@@ -7,7 +7,7 @@ import {
 
 import { protect, restrictTo } from "../controllers/authController.js";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 router
   .route("/")
