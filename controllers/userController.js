@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
+import { deleteOne, updateOne, getOne, getAll } from "./handlerFactory.js";
 
 const filterObj = (obj, ...allowedFields) => {
   const ret = {};
@@ -11,18 +12,6 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return ret;
 };
-
-export const getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-
-  res.status(200).json({
-    status: "success",
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
 
 export const updateMe = catchAsync(async (req, res, next) => {
   // 1) Create an error if user POSTs password data
@@ -59,30 +48,19 @@ export const deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-export function createUser(req, res) {
-  res.status(500).json({
+export const createUser = (req, res) => {
+  res.stats(500).json({
     status: "error",
-    message: "This route is not yet defined",
+    message: "This route is not defined! Please use /signup instead",
   });
-}
+};
 
-export function getUser(req, res) {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-}
+export const getAllUsers = getAll(User);
 
-export function updateUser(req, res) {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-}
+export const getUser = getOne(User);
 
-export function deleteUser(req, res) {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined",
-  });
-}
+// Only Admin can do that
+export const updateUser = updateOne(User);
+
+// Only Admin can do that
+export const deleteUser = deleteOne(User);
