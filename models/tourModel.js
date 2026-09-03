@@ -1,14 +1,6 @@
 import { Schema, model } from "mongoose";
-import GeoJSON from "mongoose-geojson-schema";
 import slugify from "slugify";
 // import User from "./userModel.js";
-
-const locationSchema = new Schema({
-  geometry: GeoJSON.Point,
-  address: String,
-  description: String,
-  day: Number,
-});
 
 const tourSchema = new Schema(
   {
@@ -92,11 +84,28 @@ const tourSchema = new Schema(
       default: false,
     },
     startLocation: {
-      geometry: GeoJSON.Point,
+      type: {
+        type: String,
+        default: "Point",
+        enum: ["Point"],
+      },
+      coordinates: [Number],
       address: String,
       description: String,
     },
-    locations: [locationSchema],
+    locations: [
+      {
+        type: {
+          type: String,
+          default: "Point",
+          enum: ["Point"],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
     guides: [
       {
         type: Schema.ObjectId,
@@ -141,8 +150,8 @@ tourSchema.pre(/^find/, function () {
   this.populate({
     path: "guides",
     select: "-__v -passwordChangedAt",
-  })
-})
+  });
+});
 
 // post on find also
 tourSchema.post(/^find/, function (docs) {
