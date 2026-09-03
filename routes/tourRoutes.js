@@ -10,6 +10,7 @@ import {
   deleteTour,
 } from "../controllers/tourController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
+import { createReview } from "../controllers/reviewController.js";
 
 const router = Router();
 
@@ -27,5 +28,10 @@ router
   .get(getTour)
   .patch(updateTour)
   .delete(protect, restrictTo("admin", "lead-guide"), deleteTour);
+
+// TODO: doesn't make much sense, to be changed
+router
+  .route("/:tourID/reviews")
+  .post(protect, restrictTo("user"), createReview);
 
 export default router;

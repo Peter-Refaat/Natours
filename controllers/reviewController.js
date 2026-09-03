@@ -28,6 +28,9 @@ export const getReview = catchAsync(async (req, res, next) => {
 });
 
 export const createReview = catchAsync(async (req, res, next) => {
+  // Allow Nested Routes
+  if (!req.body.tour) req.body.tour = req.params.tourID;
+  if (!req.body.user) req.body.user = req.user.id;
   const newReview = await Review.create(req.body);
 
   res.status(201).json({
