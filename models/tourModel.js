@@ -171,4 +171,11 @@ tourSchema.virtual("durationWeeks").get(function () {
   return Math.floor(this.duration / 7);
 });
 
+// Virtual Population
+tourSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "tour",
+  localField: "_id",
+});
+
 export default model("Tour", tourSchema);
