@@ -7,6 +7,7 @@ import {
   updateUser,
   deleteUser,
   deleteMe,
+  getMe,
 } from "../controllers/userController.js";
 import {
   signup,
@@ -25,6 +26,7 @@ router.post("/forgotPassword", forgotPassword);
 router.patch("/resetPassword/:token", resetPassword);
 router.patch("/updateMyPassword", protect, updatePassword);
 
+router.get("/me", protect, getMe, getUser);
 router.patch("/updateMe", protect, updateMe);
 router.delete("/deleteMe", protect, deleteMe);
 
