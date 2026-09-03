@@ -33,4 +33,14 @@ const reviewSchema = new Schema(
   },
 );
 
+reviewSchema.pre(/^find/, function () {
+  this.populate({
+    path: "tour",
+    select: "name",
+  }).populate({
+    path: "user",
+    select: "name role",
+  });
+});
+
 export default model("Review", reviewSchema);

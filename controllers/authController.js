@@ -20,20 +20,20 @@ const createSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
   };
-  if(process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
   res.cookie("jwt", token, cookieOptions);
 
   // Remove the password from the output
   user.password = undefined;
 
-    res.status(statusCode).json({
-      status: "success",
-      token,
-      data: {
-        user,
-      },
-    });
+  res.status(statusCode).json({
+    status: "success",
+    token,
+    data: {
+      user,
+    },
+  });
 };
 
 export const signup = catchAsync(async (req, res, next) => {
