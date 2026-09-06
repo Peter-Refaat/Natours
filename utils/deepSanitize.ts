@@ -1,7 +1,17 @@
 import sanitizeHtml from "sanitize-html";
+import type { NextFunction, Request, Response } from "express";
+
+type SanitizableValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | SanitizableValue[]
+  | { [key: string]: SanitizableValue };
 
 // recursive function to sanitize deeply nested objects against XSS attacks
-const deepSanitize = function (val) {
+const deepSanitize = function (val: SanitizableValue): SanitizableValue {
   if (typeof val === "string") {
     return sanitizeHtml(val, {
       allowedTags: [
@@ -43,12 +53,12 @@ const deepSanitize = function (val) {
   return val;
 };
 
-const xssSanitizer = (req, res, next) => {
+const xssSanitizer = (req: Request, res: Response, next: NextFunction) => {
   if (req.body) req.body = deepSanitize(req.body);
-  if (req.query) req.query = deepSanitize(req.query);
-  if (req.params) req.params = deepSanitize(req.params);
+  if (req.query) req.query = deepSanitize(req.query) as typeof req.query;
+  if (req.params) req.params = deepSanitize(req.params) as typeof req.params;
 
   next();
-}
+};
 
 export default xssSanitizer;

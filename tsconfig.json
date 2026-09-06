@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": ".",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "checkJs": false,
+    "noEmitOnError": true
+  },
+  "include": [
+    "app.ts",
+    "server.ts",
+    "app.js",
+    "server.js",
+    "controllers/**/*.ts",
+    "controllers/**/*.js",
+    "models/**/*.ts",
+    "models/**/*.js",
+    "routes/**/*.ts",
+    "routes/**/*.js",
+    "utils/**/*.ts",
+    "utils/**/*.js",
+    "types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "public", "dev-data", "dist"]
+}
