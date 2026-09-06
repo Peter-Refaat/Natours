@@ -34,6 +34,8 @@ const reviewSchema = new Schema(
   },
 );
 
+reviewSchema.index({ user: 1, tour: 1 }, { unique: true });
+
 reviewSchema.pre(/^find/, function () {
   // this.populate({
   //   path: "tour",
@@ -64,7 +66,7 @@ reviewSchema.statics.calcAverageRating = async function (tourID) {
       },
     },
   ]);
-  // console.log(stats);
+  console.log(stats);
   if (stats.length > 0) {
     await Tour.findByIdAndUpdate(tourID, {
       ratingsAverage: stats[0].avgRating,
@@ -91,5 +93,16 @@ reviewSchema.post(/^findOneAnd/, async function (doc) {
     await doc.constructor.calcAverageRating(doc.tour);
   }
 });
+
+// alternate solution to prevent duplicate reviews
+// reviewSchema.pre("save", async function () {
+//   const duplicate = this.constructor.findOne({
+//     user: this.user,
+//     tour: this.tour,
+//   });
+//   if (duplicate) {
+//     throw new AppError(`Can't have multiple reviews for the same tour`);
+//   }
+// });
 
 export default model("Review", reviewSchema);
