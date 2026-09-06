@@ -167,6 +167,9 @@ tourSchema.pre("aggregate", function () {
   console.log(this);
 });
 
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 tourSchema.virtual("durationWeeks").get(function () {
   return Math.floor(this.duration / 7);
 });
