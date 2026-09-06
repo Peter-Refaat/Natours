@@ -161,12 +161,12 @@ tourSchema.post(/^find/, function (docs) {
 });
 
 // AGGREGATION MIDDLEWARE
-tourSchema.pre("aggregate", function () {
-  this.pipeline().unshift({
-    $match: { secretTour: { $ne: true } },
-  });
-  console.log(this);
-});
+// tourSchema.pre("aggregate", function () {
+//   this.pipeline().unshift({
+//     $match: { secretTour: { $ne: true } },
+//   });
+//   console.log(this);
+// });
 
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });

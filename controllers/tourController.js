@@ -139,3 +139,53 @@ export const getToursWithin = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+export const getDistances = catchAsync(async (req, res, next) => {
+  const { latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(",").map(Number);
+
+  const multiplier = unit === "mi" ? 0.000621371 : 1 / 1000;
+
+  if (Number.isNaN(lat) || Number.isNaN(lng)) {
+    return next(
+      new AppError(
+        "Please provide latitude and longitude in the format lat,lng.",
+        400,
+      ),
+    );
+  }
+
+  if (unit !== "mi" && unit !== "km") {
+    return next(
+      new AppError(
+        "Measuring unit entered is not supported, please enter either km or mi",
+        400,
+      ),
+    );
+  }
+
+  const distances = await Tour.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [lng, lat],
+        },
+        distanceField: "distance",
+        distanceMultiplier: multiplier,
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        distance: 1,
+      },
+    },
+  ]);
+  res.status(200).json({
+    status: "success",
+    data: {
+      data: distances,
+    },
+  });
+});
