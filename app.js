@@ -29,7 +29,31 @@ app.set("views", path.join(__dirname, "views"));
 app.use(expressStatic(path.join(__dirname, "public")));
 
 // Set security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://unpkg.com"],
+        styleSrc: ["'self'", "https://unpkg.com", "'unsafe-inline'"],
+        connectSrc: [
+          "'self'",
+          "https://unpkg.com",
+          "https://tile.openstreetmap.org",
+          "https://*.tile.openstreetmap.org",
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://unpkg.com",
+          "https://tile.openstreetmap.org",
+          "https://*.tile.openstreetmap.org",
+        ],
+        workerSrc: ["'self'", "blob:"],
+      },
+    },
+  }),
+);
 
 // Development logging
 if (process.env.NODE_ENV === "development") {
