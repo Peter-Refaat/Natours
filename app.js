@@ -4,6 +4,8 @@ import morgan from "morgan";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
+import cookieParser from "cookie-parser";
+
 import { rateLimit } from "express-rate-limit";
 import { fileURLToPath } from "url";
 
@@ -34,10 +36,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://unpkg.com"],
+        scriptSrc: ["'self'", "https://unpkg.com", "https://cdn.jsdelivr.net"],
         styleSrc: ["'self'", "https://unpkg.com", "'unsafe-inline'"],
         connectSrc: [
           "'self'",
+          "https://cdn.jsdelivr.net",
           "https://unpkg.com",
           "https://tile.openstreetmap.org",
           "https://*.tile.openstreetmap.org",
@@ -62,6 +65,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Body parser, reading data from the body into req.body
 app.use(json({ limit: "10kb" }));
+app.use(cookieParser());
 
 // Data Sanitization agains NoSQL query injection
 app.use(mongoSanitize());
@@ -94,7 +98,7 @@ app.use("/api", limiter);
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  // console.log("HEADERSSSS", req.headers);
+  console.log(req.cookies);
   next();
 });
 

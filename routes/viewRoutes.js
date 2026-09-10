@@ -1,9 +1,15 @@
 import { Router } from "express";
-import { getOverview, getTour } from "../controllers/viewsController.js";
+import {
+  getOverview,
+  getTour,
+  getLoginForm,
+} from "../controllers/viewsController.js";
+import { isLoggedIn } from "../controllers/authController.js";
 
 const router = Router();
-
+router.use(isLoggedIn);
 router.get("/", getOverview);
 router.get("/tour/:slug", getTour);
+router.get("/login", getLoginForm);
 
 export default router;
