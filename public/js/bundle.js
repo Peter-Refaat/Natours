@@ -3819,6 +3819,30 @@
     }
   };
 
+  // public/js/signup.js
+  var signup = async (name, email, password, passwordConfirm) => {
+    try {
+      const res = await axios_default({
+        method: "POST",
+        url: "http://127.0.0.1:8000/api/v1/users/signup",
+        data: {
+          name,
+          email,
+          password,
+          passwordConfirm
+        }
+      });
+      if (res.data.status === "success") {
+        showAlert("success", "Account created successfully!");
+        window.setTimeout(() => {
+          location.assign("/");
+        }, 1500);
+      }
+    } catch (err) {
+      showAlert("error", err.response?.data?.message || "Unable to sign up");
+    }
+  };
+
   // public/js/leaflet.js
   var displayMap = (locations) => {
     const worldBounds = L.latLngBounds([-85.0511, -180], [85.0511, 180]);
@@ -3856,7 +3880,8 @@
 
   // public/js/index.js
   var mapBox = document.getElementById("map");
-  var loginForm = document.querySelector(".form");
+  var loginForm = document.querySelector(".form--login");
+  var signupForm = document.querySelector(".form--signup");
   if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations);
@@ -3867,6 +3892,16 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       login(email, password);
+    });
+  }
+  if (signupForm) {
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const passwordConfirm = document.getElementById("passwordConfirm").value;
+      signup(name, email, password, passwordConfirm);
     });
   }
 })();
