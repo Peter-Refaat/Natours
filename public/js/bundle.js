@@ -3818,6 +3818,19 @@
       showAlert("error", err.response.data.message);
     }
   };
+  var logout = async () => {
+    try {
+      const res = await axios_default({
+        method: "GET",
+        url: "http://127.0.0.1:8000/api/v1/users/logout"
+      });
+      if (res.data.status === "success") {
+        location.reload(true);
+      }
+    } catch (err) {
+      showAlert("error", "Error logging out! try again.");
+    }
+  };
 
   // public/js/signup.js
   var signup = async (name, email, password, passwordConfirm) => {
@@ -3882,6 +3895,7 @@
   var mapBox = document.getElementById("map");
   var loginForm = document.querySelector(".form--login");
   var signupForm = document.querySelector(".form--signup");
+  var logoutBtn = document.querySelector(".nav__el--logout");
   if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations);
@@ -3903,5 +3917,8 @@
       const passwordConfirm = document.getElementById("passwordConfirm").value;
       signup(name, email, password, passwordConfirm);
     });
+  }
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
   }
 })();

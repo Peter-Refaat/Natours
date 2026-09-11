@@ -17,12 +17,14 @@ import {
   protect,
   updatePassword,
   restrictTo,
+  logout,
 } from "../controllers/authController.js";
 
 const router = Router({ mergeParams: true });
 
 router.post("/signup", signup);
 router.post("/login", login);
+router.get("/logout", logout);
 router.post("/forgotPassword", forgotPassword);
 router.patch("/resetPassword/:token", resetPassword);
 

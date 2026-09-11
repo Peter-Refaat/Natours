@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { login } from "./login.js";
+import { login, logout } from "./login.js";
 import { signup } from "./signup.js";
 import { displayMap } from "./leaflet.js";
 
@@ -7,6 +7,7 @@ import { displayMap } from "./leaflet.js";
 const mapBox = document.getElementById("map");
 const loginForm = document.querySelector(".form--login");
 const signupForm = document.querySelector(".form--signup");
+const logoutBtn = document.querySelector(".nav__el--logout");
 
 // DELEGATION
 if (mapBox) {
@@ -32,4 +33,8 @@ if (signupForm) {
     const passwordConfirm = document.getElementById("passwordConfirm").value;
     signup(name, email, password, passwordConfirm);
   });
+}
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", logout)
 }
