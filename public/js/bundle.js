@@ -3800,13 +3800,9 @@
   // public/js/login.js
   var login = async (email, password) => {
     try {
-      const res = await axios_default({
-        method: "POST",
-        url: "http://127.0.0.1:8000/api/v1/users/login",
-        data: {
-          email,
-          password
-        }
+      const res = await axios_default.post("/api/v1/users/login", {
+        email,
+        password
       });
       if (res.data.status === "success") {
         showAlert("success", "Logged in Successfuly!");
@@ -3892,23 +3888,19 @@
   };
 
   // public/js/updateSettings.js
-  var updateData = async (name, email) => {
+  var update = async (endpoint, data, successMessage) => {
     try {
-      const res = await axios_default({
-        method: "PATCH",
-        url: "http://127.0.0.1:8000/api/v1/users/updateMe",
-        data: {
-          name,
-          email
-        }
-      });
+      const res = await axios_default.patch(`/api/v1/users/${endpoint}`, data);
       if (res.data.status === "success") {
-        showAlert("success", "Data updated successfuly!");
+        showAlert("success", successMessage);
       }
-    } catch (err) {
-      showAlert("error", err.response.data.message);
+    } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong";
+      showAlert("error", message);
     }
   };
+  var updateUserData = async (data) => await update("updateMe", data, "Data updated successfully!");
+  var updatePassword = async (data) => await update("updateMyPassword", data, "Password changed successfully!");
 
   // public/js/index.js
   var mapBox = document.getElementById("map");
@@ -3916,6 +3908,7 @@
   var signupForm = document.querySelector(".form--signup");
   var logoutBtn = document.querySelector(".nav__el--logout");
   var userDataForm = document.querySelector(".form-user-data");
+  var userPasswordForm = document.querySelector(".form-user-password");
   if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations);
@@ -3946,7 +3939,21 @@
       e.preventDefault();
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
-      updateData(name, email);
+      updateUserData({ name, email });
+    });
+  }
+  if (userPasswordForm) {
+    userPasswordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      document.querySelector(".btn--save-password").textContent = "Updating...";
+      const passwordCurrent = document.getElementById("password-current").value;
+      const password = document.getElementById("password").value;
+      const passwordConfirm = document.getElementById("password-confirm").value;
+      await updatePassword({ passwordCurrent, password, passwordConfirm });
+      document.querySelector(".btn--save-password").textContent = "Save password";
+      document.getElementById("password-current").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("password-confirm").value = "";
     });
   }
 })();

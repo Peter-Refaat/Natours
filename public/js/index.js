@@ -2,14 +2,15 @@
 import { login, logout } from "./login.js";
 import { signup } from "./signup.js";
 import { displayMap } from "./leaflet.js";
-import { updateData } from "./updateSettings.js";
+import { updatePassword, updateUserData } from "./updateSettings.js";
 
 // DOM ELEMENTS
 const mapBox = document.getElementById("map");
 const loginForm = document.querySelector(".form--login");
 const signupForm = document.querySelector(".form--signup");
 const logoutBtn = document.querySelector(".nav__el--logout");
-const userDataForm = document.querySelector(".form-user-data")
+const userDataForm = document.querySelector(".form-user-data");
+const userPasswordForm = document.querySelector(".form-user-password");
 
 // DELEGATION
 if (mapBox) {
@@ -46,6 +47,21 @@ if (userDataForm) {
     e.preventDefault();
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
-    updateData(name, email);
-  })
+    updateUserData({ name, email });
+  });
+}
+
+if (userPasswordForm) {
+  userPasswordForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    document.querySelector(".btn--save-password").textContent = "Updating...";
+    const passwordCurrent = document.getElementById("password-current").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("password-confirm").value;
+    await updatePassword({ passwordCurrent, password, passwordConfirm });
+    document.querySelector(".btn--save-password").textContent = "Save password";
+    document.getElementById("password-current").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("password-confirm").value = "";
+  });
 }
