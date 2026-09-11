@@ -3891,11 +3891,31 @@
     map.fitBounds(bounds);
   };
 
+  // public/js/updateSettings.js
+  var updateData = async (name, email) => {
+    try {
+      const res = await axios_default({
+        method: "PATCH",
+        url: "http://127.0.0.1:8000/api/v1/users/updateMe",
+        data: {
+          name,
+          email
+        }
+      });
+      if (res.data.status === "success") {
+        showAlert("success", "Data updated successfuly!");
+      }
+    } catch (err) {
+      showAlert("error", err.response.data.message);
+    }
+  };
+
   // public/js/index.js
   var mapBox = document.getElementById("map");
   var loginForm = document.querySelector(".form--login");
   var signupForm = document.querySelector(".form--signup");
   var logoutBtn = document.querySelector(".nav__el--logout");
+  var userDataForm = document.querySelector(".form-user-data");
   if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations);
@@ -3920,5 +3940,13 @@
   }
   if (logoutBtn) {
     logoutBtn.addEventListener("click", logout);
+  }
+  if (userDataForm) {
+    userDataForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      updateData(name, email);
+    });
   }
 })();
