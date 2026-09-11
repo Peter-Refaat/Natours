@@ -110,6 +110,7 @@ export const protect = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = curUser; // Will be useful in the future
+  res.locals.user = curUser; // to use it in pug templates
   next();
 });
 

@@ -41,3 +41,9 @@ export const getSignupForm = (req, res) => {
     title: "Create new account",
   });
 };
+
+export const getAccount = (req, res) => {
+  res.status(200).render("account", {
+    title: "Your account",
+  });
+};
