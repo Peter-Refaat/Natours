@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
   updateMe,
   getAllUsers,
@@ -8,6 +9,7 @@ import {
   deleteUser,
   deleteMe,
   getMe,
+  uploadUserPhoto,
 } from "../controllers/userController.js";
 import {
   signup,
@@ -34,7 +36,7 @@ router.use(protect);
 router.patch("/updateMyPassword", updatePassword);
 
 router.get("/me", getMe, getUser);
-router.patch("/updateMe", updateMe);
+router.patch("/updateMe", uploadUserPhoto, updateMe);
 router.delete("/deleteMe", deleteMe);
 
 // restricts all routes coming after this point (because middlewares run in sequence)

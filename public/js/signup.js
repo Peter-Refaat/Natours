@@ -4,7 +4,7 @@ import { showAlert } from "./alerts.js";
 
 export const signup = async (name, email, password, passwordConfirm) => {
   try {
-    const res = await axios.post("/api/v1/users/signup", { name, email, password, passwordConfirm, photo: "default-user.png" });
+    const res = await axios.post("/api/v1/users/signup", { name, email, password, passwordConfirm });
 
     if (res.data.status === "success") {
       showAlert("success", "Account created successfully!");

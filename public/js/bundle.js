@@ -3831,7 +3831,7 @@
   // public/js/signup.js
   var signup = async (name, email, password, passwordConfirm) => {
     try {
-      const res = await axios_default.post("/api/v1/users/signup", { name, email, password, passwordConfirm, photo: "default-user.png" });
+      const res = await axios_default.post("/api/v1/users/signup", { name, email, password, passwordConfirm });
       if (res.data.status === "success") {
         showAlert("success", "Account created successfully!");
         window.setTimeout(() => {
@@ -3928,9 +3928,7 @@
   if (userDataForm) {
     userDataForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      updateUserData({ name, email });
+      updateUserData(new FormData(userDataForm));
     });
   }
   if (userPasswordForm) {
