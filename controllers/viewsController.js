@@ -1,4 +1,5 @@
 import Tour from "../models/tourModel.js";
+import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
 
 export const getOverview = catchAsync(async (req, res, next) => {
@@ -18,6 +19,9 @@ export const getTour = catchAsync(async (req, res, next) => {
     path: "reviews",
     fields: "review rating user",
   });
+  if (!tour) {
+    return next(new AppError("There is no tour with that name.", 404));
+  }
   // 2) Build the template
   // 3) Render the template using data from 1)
   res.status(200).render("tour", {
