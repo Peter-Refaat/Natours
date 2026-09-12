@@ -10,6 +10,7 @@ import {
   deleteMe,
   getMe,
   uploadUserPhoto,
+  resizeUserPhoto,
 } from "../controllers/userController.js";
 import {
   signup,
@@ -36,7 +37,7 @@ router.use(protect);
 router.patch("/updateMyPassword", updatePassword);
 
 router.get("/me", getMe, getUser);
-router.patch("/updateMe", uploadUserPhoto, updateMe);
+router.patch("/updateMe", uploadUserPhoto, resizeUserPhoto, updateMe);
 router.delete("/deleteMe", deleteMe);
 
 // restricts all routes coming after this point (because middlewares run in sequence)
