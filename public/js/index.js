@@ -43,9 +43,9 @@ if (logoutBtn) {
 }
 
 if (userDataForm) {
-  userDataForm.addEventListener("submit", (e) => {
+  userDataForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    updateUserData(new FormData(userDataForm));
+    await updateUserData(new FormData(userDataForm));
   });
 }
 
