@@ -17,8 +17,14 @@ export default class Email {
 
   newTransport() {
     if (process.env.NODE_ENV === "production") {
-      console.log("TODO MAILS IN PRODUCTION");
-      return 1;
+      return createTransport({
+        host: process.env.BREVO_HOST,
+        port: process.env.BREVO_PORT,
+        auth: {
+          user: process.env.BREVO_LOGIN,
+          pass: process.env.BREVO_PASSWORD,
+        },
+      });
     }
 
     return createTransport({
