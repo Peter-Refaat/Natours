@@ -1,4 +1,3 @@
-import multer from "multer";
 import sharp from "sharp";
 import Tour from "../models/tourModel.js";
 import catchAsync from "../utils/catchAsync.js";
@@ -10,21 +9,7 @@ import {
   getAll,
 } from "./handlerFactory.js";
 import AppError from "../utils/appError.js";
-
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = function (req, file, cb) {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new AppError("Not an image! Please upload only images.", 400), false);
-  }
-};
-
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
+import { upload } from "../utils/multer.js";
 
 // for uploading multiple images with the same name
 // upload.array("images", 5);
@@ -41,11 +26,34 @@ export const uploadTourImages = upload.fields([
   },
 ]);
 
-export const resizeTourImages = (req, res, next) => {
+export const resizeTourImages = catchAsync(async (req, res, next) => {
   // req.files coming from upload.fields & upload.array (in this case there's no upload.array so it's only upload.fields)
-  console.log(req.files);
+  if (!req.files || !req.files.imageCover || !req.files.images) return next();
+
+  // 1) Cover image
+  // to access it in updateOne factoy function
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/tours/${req.body.imageCover}`);
+  // 2) images
+  req.body.images = [];
+  await Promise.all(
+    req.files.images.map(async (file, i) => {
+      const fileName = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      await sharp(file.buffer)
+        .resize(2000, 1333)
+        .toFormat("jpeg")
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/tours/${fileName}`);
+      req.body.images.push(fileName);
+    }),
+  );
   next();
-};
+});
 
 export function aliasTopTours(req, res, next) {
   req.query.limit = "5";
