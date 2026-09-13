@@ -3901,6 +3901,20 @@
   var updateUserData = async (data) => await update("updateMe", data, "Data updated successfully!");
   var updatePassword = async (data) => await update("updateMyPassword", data, "Password changed successfully!");
 
+  // public/js/payment.js
+  var bookTour = async (tourID) => {
+    try {
+      const res = await axios_default.get(
+        `/api/v1/bookings/checkout-session/${tourID}`
+      );
+      window.setTimeout(() => {
+        window.location.assign(res.data.checkoutURL);
+      }, 1500);
+    } catch (err) {
+      showAlert("error", err.response.data.message);
+    }
+  };
+
   // public/js/index.js
   var mapBox = document.getElementById("map");
   var loginForm = document.querySelector(".form--login");
@@ -3909,8 +3923,10 @@
   var userDataForm = document.querySelector(".form-user-data");
   var userPasswordForm = document.querySelector(".form-user-password");
   var themeToggle = document.querySelector(".theme-toggle");
+  var bookBtn = document.querySelector(".btn--book-tour");
   var applyTheme = (isDark) => {
     document.body.classList.toggle("dark-mode", isDark);
+    document.documentElement.classList.toggle("dark-mode", isDark);
     if (themeToggle) {
       themeToggle.setAttribute("aria-pressed", isDark);
       themeToggle.setAttribute(
@@ -3971,6 +3987,19 @@
       document.getElementById("password-current").value = "";
       document.getElementById("password").value = "";
       document.getElementById("password-confirm").value = "";
+    });
+  }
+  if (bookBtn) {
+    const resetBookTourButton = () => {
+      bookBtn.textContent = "Book tour now!";
+      bookBtn.disabled = false;
+    };
+    window.addEventListener("pageshow", resetBookTourButton);
+    bookBtn.addEventListener("click", () => {
+      const tourID = bookBtn.dataset.tourId;
+      bookBtn.textContent = "Preparing checkout...";
+      bookBtn.disabled = true;
+      bookTour(tourID);
     });
   }
 })();

@@ -1452,6 +1452,20 @@ body.dark-mode {
   scrollbar-color: #55c57a #202925;
 }
 
+body.dark-mode::-webkit-scrollbar-track,
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #202925;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb,
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right bottom, #3aa66d, #55c57a);
+}
+
+html.dark-mode {
+  scrollbar-color: #55c57a #202925;
+}
+
 body.dark-mode .main,
 body.dark-mode .section-description,
 body.dark-mode .section-reviews,
@@ -1528,4 +1542,12 @@ body.dark-mode .theme-toggle:hover {
 
 body.dark-mode .footer {
   background-color: #111714;
+}
+
+body.dark-mode .reviews::-webkit-scrollbar-track {
+  background: #202925;
+}
+
+body.dark-mode .reviews::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right bottom, #3aa66d, #55c57a);
 }
