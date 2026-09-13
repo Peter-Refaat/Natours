@@ -54,7 +54,7 @@ export default async function createPaymentIntention({
           floor: "NA",
           state: "Cairo",
         },
-        special_reference: `tour-${tour.id}-${user.id}-${Date.now()}`,
+        special_reference: `${tour.name}-${tour.id}-${user.id}-${Date.now()}`,
         redirection_url: redirectionUrl,
       },
       {

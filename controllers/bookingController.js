@@ -1,6 +1,6 @@
 /* eslint-disable */
 import Tour from "../models/tourModel.js";
-import { isValidObjectId } from "mongoose";
+import Booking from "../models/bookingModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import createPaymentIntention from "../services/paymobService.js";
@@ -11,11 +11,19 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
 
   if (!tour) return next(new AppError("No tour found with that ID!", 404));
   // 2) create a Paymob payment intention
+  const paymentReturnUrl = new URL(
+    `/tour/${tour.slug}`,
+    `${req.protocol}://${req.get("host")}`,
+  );
+  paymentReturnUrl.searchParams.set("tourID", tour.id.toString());
+  paymentReturnUrl.searchParams.set("userID", req.user.id.toString());
+  paymentReturnUrl.searchParams.set("price", tour.price.toString());
+
   const session = await createPaymentIntention({
     amount: tour.price,
     tour,
     user: req.user,
-    redirectionUrl: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`,
+    redirectionUrl: paymentReturnUrl.toString(),
   });
 
   // 3) create session as response
@@ -24,4 +32,19 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
     session,
     checkoutURL: session.url,
   });
+});
+
+// TEMPORARY, becuase it's UNSECURE: everyone can make bookings without paying
+export const createBookingCheckout = catchAsync(async (req, res, next) => {
+  const { tourID, userID, price } = req.query;
+
+  if (!tourID || !userID || !price) return next();
+
+  await Booking.create({
+    tour: tourID,
+    user: userID,
+    price: Number(price),
+  });
+
+  res.redirect(req.originalUrl.split("?")[0]);
 });
