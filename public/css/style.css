@@ -998,6 +998,39 @@ body {
 .nav__el:focus {
   outline: none;
 }
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-right: 2.5rem;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 10rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #f7f7f7;
+  font: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid #7dd56f;
+  outline-offset: 2px;
+}
+.theme-toggle__icon::before {
+  content: "☾";
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.dark-mode .theme-toggle__icon::before {
+  content: "☀";
+}
 .nav__el--cta {
   padding: 1rem 3rem;
   border-radius: 10rem;
@@ -1410,4 +1443,89 @@ body {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+}
+
+/* Theme overrides */
+body.dark-mode {
+  background-color: #151b19;
+  color: #d9e2dd;
+  scrollbar-color: #55c57a #202925;
+}
+
+body.dark-mode .main,
+body.dark-mode .section-description,
+body.dark-mode .section-reviews,
+body.dark-mode .section-cta {
+  background-color: #1d2622;
+}
+
+body.dark-mode .section-description > *,
+body.dark-mode .section-reviews,
+body.dark-mode .section-cta {
+  color: #d9e2dd;
+}
+
+body.dark-mode .card,
+body.dark-mode .card__header,
+body.dark-mode .card__footer,
+body.dark-mode .overview-box,
+body.dark-mode .description-box,
+body.dark-mode .reviews__card,
+body.dark-mode .cta,
+body.dark-mode .login-form,
+body.dark-mode .form,
+body.dark-mode .form__input,
+body.dark-mode .user-view__content,
+body.dark-mode .user-view__menu {
+  background-color: #26322d;
+  color: #d9e2dd;
+}
+
+body.dark-mode .form__input {
+  border-bottom-color: #66756c;
+}
+
+body.dark-mode .form__input:focus {
+  border-bottom-color: #55c57a;
+}
+
+body.dark-mode .heading-secondary,
+body.dark-mode .heading-tertirary,
+body.dark-mode .overview-box__label,
+body.dark-mode .overview-box__text,
+body.dark-mode .card__sub-heading,
+body.dark-mode .card__text,
+body.dark-mode .card__detail,
+body.dark-mode .card__footer-text,
+body.dark-mode .reviews__user,
+body.dark-mode .reviews__text,
+body.dark-mode .description-box .description__text,
+body.dark-mode .cta .heading-secondary,
+body.dark-mode .cta .heading-tertirary,
+body.dark-mode .form__label,
+body.dark-mode .section-description p {
+  color: #d9e2dd;
+}
+
+body.dark-mode .card__footer {
+  border-top-color: #3b4942;
+}
+
+body.dark-mode .reviews__card,
+body.dark-mode .cta,
+body.dark-mode .login-form {
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .theme-toggle {
+  border-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .footer {
+  background-color: #111714;
 }

@@ -11,6 +11,31 @@ const signupForm = document.querySelector(".form--signup");
 const logoutBtn = document.querySelector(".nav__el--logout");
 const userDataForm = document.querySelector(".form-user-data");
 const userPasswordForm = document.querySelector(".form-user-password");
+const themeToggle = document.querySelector(".theme-toggle");
+
+const applyTheme = (isDark) => {
+  document.body.classList.toggle("dark-mode", isDark);
+  if (themeToggle) {
+    themeToggle.setAttribute("aria-pressed", isDark);
+    themeToggle.setAttribute(
+      "aria-label",
+      isDark ? "Switch to light mode" : "Switch to dark mode",
+    );
+    themeToggle.querySelector(".theme-toggle__label").textContent = isDark
+      ? "Light mode"
+      : "Dark mode";
+  }
+};
+
+applyTheme(localStorage.getItem("natours-theme") === "dark");
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const isDark = !document.body.classList.contains("dark-mode");
+    applyTheme(isDark);
+    localStorage.setItem("natours-theme", isDark ? "dark" : "light");
+  });
+}
 
 // DELEGATION
 if (mapBox) {

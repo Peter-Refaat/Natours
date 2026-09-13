@@ -3908,6 +3908,26 @@
   var logoutBtn = document.querySelector(".nav__el--logout");
   var userDataForm = document.querySelector(".form-user-data");
   var userPasswordForm = document.querySelector(".form-user-password");
+  var themeToggle = document.querySelector(".theme-toggle");
+  var applyTheme = (isDark) => {
+    document.body.classList.toggle("dark-mode", isDark);
+    if (themeToggle) {
+      themeToggle.setAttribute("aria-pressed", isDark);
+      themeToggle.setAttribute(
+        "aria-label",
+        isDark ? "Switch to light mode" : "Switch to dark mode"
+      );
+      themeToggle.querySelector(".theme-toggle__label").textContent = isDark ? "Light mode" : "Dark mode";
+    }
+  };
+  applyTheme(localStorage.getItem("natours-theme") === "dark");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark-mode");
+      applyTheme(isDark);
+      localStorage.setItem("natours-theme", isDark ? "dark" : "light");
+    });
+  }
   if (mapBox) {
     const locations = JSON.parse(mapBox.dataset.locations);
     displayMap(locations);
