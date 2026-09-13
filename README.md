@@ -14,9 +14,11 @@
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [System Architecture](#system-architecture)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
 - [Routes & API Endpoints](#routes--api-endpoints)
+- [Database Schema](#database-schema)
 - [Authentication & Authorization](#authentication--authorization)
 - [Payment Integration](#payment-integration)
 - [Email System](#email-system)
@@ -205,6 +207,179 @@ npm run build:js
 
 ---
 
+## 🏗️ System Architecture
+
+```mermaid
+graph TB
+    subgraph Client["Client Browser"]
+        A[Views] -->|HTTP| B[Express Server]
+        B -->|Static| C[CSS / JS / Images]
+    end
+
+    subgraph Server["Express Server"]
+        B --> D[Routes]
+        D --> E[Controllers]
+        E --> F[Middleware]
+        F -->|Security| G[Helmet / CORS / RateLimit / XSS]
+        E --> H[Services]
+        H --> I[Paymob API]
+        H --> J[Nodemailer]
+    end
+
+    subgraph Database["MongoDB"]
+        E --> K[Tours]
+        E --> L[Users]
+        E --> M[Reviews]
+        E --> N[Bookings]
+    end
+
+    subgraph External["External Services"]
+        F -->|JWT| O[(JWT Secret)]
+        H -->|Email| P[Mailtrap / Brevo]
+        H -->|Payment| Q[Paymob Gateway]
+    end
+```
+
+---
+
+## 🗄️ Database Schema
+
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    Tour ||--o{ Review : has
+    Tour ||--o{ Booking : has
+    User ||--o{ Review : writes
+    User ||--o{ Booking : has
+    User }o--|| Tour : guides
+
+    Tour {
+        string name
+        string slug
+        number duration
+        number maxGroupSize
+        string difficulty
+        number ratingsAverage
+        number ratingsQuantity
+        number price
+        number priceDiscount
+        string summary
+        string description
+        string imageCover
+        array images
+        string startLocation
+        array locations
+        array guides
+        boolean secretTour
+        date createdAt
+    }
+
+    User {
+        string name
+        string email
+        string photo
+        string role
+        string password
+        date passwordChangedAt
+        string passwordResetToken
+        date passwordResetExpires
+        boolean active
+    }
+
+    Review {
+        string review
+        number rating
+        string tour
+        string user
+        date createdAt
+    }
+
+    Booking {
+        string tour
+        string user
+        number price
+        boolean paid
+        date createdAt
+    }
+```
+
+### Schema Relationships in Detail
+
+```mermaid
+graph LR
+    A[Tours] -->|1:N| B[Reviews]
+    A -->|1:N| C[Bookings]
+    D[Users] -->|1:N| B
+    D -->|1:N| C
+    D -->|M:N| A
+```
+
+---
+
+## 🔐 Authentication & Authorization
+
+### Login Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant C as Client (Browser)
+    participant S as Express Server
+    participant D as MongoDB
+
+    U->>C: Enter email & password
+    C->>S: POST /api/v1/users/login
+    S->>D: Find user by email
+    D-->>S: Return user (password excluded)
+    S->>S: Verify password with bcrypt.compare()
+    alt Valid credentials
+        S->>S: Generate JWT (signToken)
+        S->>S: Set HTTP-only cookie (jwt)
+        S-->>C: 200 OK + { status: "success", user }
+        C->>C: Redirect to / (overview page)
+    else Invalid
+        S-->>C: 401 Unauthorized
+    end
+```
+
+### Authorization & Role-Based Access Flow
+
+```mermaid
+graph TD
+    A[Incoming Request] --> B{Has JWT Cookie?}
+    B -->|No| C[401 You are not logged in]
+    B -->|Yes| D[Verify JWT Token]
+    D -->|Invalid| E[401 Invalid Token]
+    D -->|Valid| F{User Exists?}
+    F -->|No| G[401 User no longer exists]
+    F -->|Yes| H{Password Changed After Token?}
+    H -->|Yes| I[401 Re-login required]
+    H -->|No| J[Set req.user & res.locals.user]
+    J --> K{restrictTo Role Check}
+    K -->|Allowed| L[Proceed to Controller]
+    K -->|Denied| M[403 No permission]
+```
+
+### Complete Authentication Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> Guest
+    Guest --> SigningUp : POST /signup
+    SigningUp --> LoggedIn : 201 Created + Welcome Email
+    Guest --> LoggingIn : POST /login
+    LoggingIn --> LoggedIn : 200 OK + JWT Cookie
+    LoggedIn --> LoggedIn : Protected routes (req.user set)
+    LoggedIn --> ForgotPassword : POST /forgotPassword
+    ForgotPassword --> ResetPassword : GET /resetPassword/:token
+    ResetPassword --> LoggedIn : 200 OK + New JWT
+    LoggedIn --> LoggedOut : GET /logout (clear cookie)
+    LoggedOut --> [*]
+```
+
+---
+
 ## 📡 Routes & API Endpoints
 
 ### 🗺️ Tours (`/api/v1/tours`)
@@ -275,18 +450,38 @@ npm run build:js
 
 ---
 
+## 📊 Database Schema
+
+See the [Entity Relationship Diagram](#-database-schema) above for a visual overview. Below are detailed schema descriptions:
+
+### Tour Schema
+- Name, duration, max group size, difficulty, price, price discount
+- GeoJSON `startLocation` and `locations` for mapping
+- Image cover + gallery, ratings with auto-calculated averages
+- Virtual `durationWeeks` and virtual population of reviews
+- Compound index on `{price: 1, ratingsAverage: -1}` and `{slug: 1}` and `{startLocation: "2dsphere"}`
+
+### User Schema
+- Name, email (validated), role (user/guide/lead-guide/admin)
+- Photo, password (bcrypt hashed), passwordChangedAt
+- Password reset token & expiry, active status
+- Method: `correctPassword()`, `changedPasswordAfter()`, `createPasswordResetToken()`
+
+### Review Schema
+- Text review, rating (1-5), references to Tour and User
+- Unique compound index on `{user: 1, tour: 1}` to prevent duplicates
+- Static method: `calcAverageRating()` via aggregation pipeline
+- Auto-calculates tour average ratings on save/update/delete
+
+### Booking Schema
+- References to Tour and User, price, paid status, creation date
+- Auto-populates user and tour name on queries
+
+---
+
 ## 🔐 Authentication & Authorization
 
-The project implements a **multi-layer security** authentication system:
-
-1. **JWT-based Sessions** — Token stored in HTTP-only cookie for secure transmission
-2. **Route Protection** — `protect` middleware verifies JWT and grants access
-3. **Role-Based Access** — `restrictTo('admin', 'lead-guide')` limits endpoints by role
-4. **Password Security** — bcryptjs hashing (cost factor 12), password confirmation validation
-5. **Password Changed Detection** — JWT invalidated if password is changed after token issuance
-6. **Password Reset** — Secure token-based reset with SHA-256 hashing and 10-minute expiry
-7. **Soft Delete** — Users are soft-deactivated (`active: false`) rather than permanently removed
-8. **Active User Filter** — All queries automatically exclude deactivated users
+See the [Authentication Flow Diagram](#authentication--authorization) above for a visual overview.
 
 ---
 
