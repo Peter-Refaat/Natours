@@ -6,6 +6,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import cookieParser from "cookie-parser";
 import compression from "compression";
+import cors from "cors";
 
 import { rateLimit } from "express-rate-limit";
 import { fileURLToPath } from "url";
@@ -28,6 +29,13 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 // 1) GLOBAL MIDDLEWARES
+app.use(cors());
+// Access-Control-Allow-Origin = *
+
+// app.options is like app.get,post,patch or any HTTP method
+// browser sends options request in the preflight phase
+app.options("*", cors());
+
 // Serving static files
 // app.use(expressStatic(`${__dirname}/public`));
 app.use(expressStatic(path.join(__dirname, "public")));
