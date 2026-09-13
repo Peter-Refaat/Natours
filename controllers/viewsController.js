@@ -1,4 +1,5 @@
 import Tour from "../models/tourModel.js";
+import Booking from "../models/bookingModel.js";
 import AppError from "../utils/appError.js";
 import catchAsync from "../utils/catchAsync.js";
 
@@ -47,3 +48,17 @@ export const getAccount = (req, res) => {
     title: "Your account",
   });
 };
+
+export const getMyTours = catchAsync(async (req, res, next) => {
+  // 1) find all bookings
+  const bookings = await Booking.find({ user: req.user.id });
+
+  const tourIDs = bookings.map((booking) => booking.tour);
+
+  const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+  res.status(200).render("overview", {
+    titel: "My Tours",
+    tours,
+  });
+});

@@ -5,6 +5,7 @@ import {
   getLoginForm,
   getSignupForm,
   getAccount,
+  getMyTours,
 } from "../controllers/viewsController.js";
 import { isLoggedIn, protect } from "../controllers/authController.js";
 import { createBookingCheckout } from "../controllers/bookingController.js";
@@ -15,5 +16,6 @@ router.get("/tour/:slug", createBookingCheckout, isLoggedIn, getTour);
 router.get("/login", isLoggedIn, getLoginForm);
 router.get("/signup", isLoggedIn, getSignupForm);
 router.get("/me", protect, getAccount);
+router.get("/my-tours", protect, getMyTours);
 
 export default router;
