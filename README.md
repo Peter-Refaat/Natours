@@ -407,7 +407,7 @@ The entire project uses modern ES module syntax (`import`/`export`) with `"type"
 
 ## 📝 License
 
-This project is licensed under the [ISC License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
