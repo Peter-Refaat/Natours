@@ -5,6 +5,7 @@ import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
 import cookieParser from "cookie-parser";
+import compression from "compression";
 
 import { rateLimit } from "express-rate-limit";
 import { fileURLToPath } from "url";
@@ -93,6 +94,8 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again in an hour!",
 });
 app.use("/api", limiter);
+
+app.use(compression);
 
 // Test middleware
 app.use((req, res, next) => {
