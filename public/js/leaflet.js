@@ -8,12 +8,15 @@ export const displayMap = (locations) => {
     scrollWheelZoom: false,
   });
 
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    noWrap: true,
-    bounds: worldBounds,
-  }).addTo(map);
+  L.tileLayer(
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+    {
+      attribution:
+        'Tiles &copy; <a href="https://www.esri.com/">Esri</a> | Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      noWrap: true,
+      bounds: worldBounds,
+    },
+  ).addTo(map);
 
   const points = [];
   locations.forEach((loc) => {
@@ -38,6 +41,12 @@ export const displayMap = (locations) => {
       })
       .openPopup();
   });
+
+  L.polyline(points, {
+    color: "#55c57a",
+    weight: 4,
+    opacity: 0.85,
+  }).addTo(map);
 
   const bounds = L.latLngBounds(points).pad(0.5);
   map.fitBounds(bounds);

@@ -12,6 +12,19 @@
   color: #fff;
 }
 
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right bottom, #28b487, #7dd56f);
+  border-radius: 10px;
+}
+
 *,
 *::before,
 *::after {
@@ -25,6 +38,8 @@ html {
   font-size: 62.5%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  scrollbar-color: #55c57a #f1f1f1;
+  scrollbar-width: thin;
 }
 
 body {
@@ -32,7 +47,6 @@ body {
   font-weight: 300;
   font-family: "Lato", sans-serif;
   color: #777;
-  padding: 3rem;
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
