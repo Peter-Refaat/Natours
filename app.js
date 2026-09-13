@@ -103,7 +103,7 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
-app.use(compression);
+app.use(compression());
 
 // Test middleware
 app.use((req, res, next) => {
